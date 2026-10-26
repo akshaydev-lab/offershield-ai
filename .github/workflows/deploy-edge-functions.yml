@@ -1,0 +1,28 @@
+name: Deploy Edge Functions to InsForge
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'functions/**'
+      - '.github/workflows/deploy-edge-functions.yml'
+
+jobs:
+  deploy-functions:
+    name: Deploy InsForge Edge Functions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Deploy analyze-offer Edge Function
+        run: |
+          npx --yes @insforge/cli functions deploy --file functions/analyze-offer/index.ts analyze-offer
+        env:
+          INSFORGE_USER_API_KEY: ${{ secrets.INSFORGE_USER_API_KEY }}

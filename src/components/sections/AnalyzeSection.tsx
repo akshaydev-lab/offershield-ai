@@ -7,7 +7,9 @@ import {
   ShieldAlert, 
   Cpu,
   Layers,
-  FileText
+  FileText,
+  AlertCircle,
+  X
 } from 'lucide-react';
 import { SAMPLE_OFFERS } from '../../constants/sampleOffers';
 import { SecurityNotice } from '../ui/SecurityNotice';
@@ -17,6 +19,8 @@ interface AnalyzeSectionProps {
   setInputText: (text: string) => void;
   onRunAnalysis: () => void;
   isAnalyzing: boolean;
+  analysisError?: string | null;
+  onClearError?: () => void;
 }
 
 export const AnalyzeSection: React.FC<AnalyzeSectionProps> = ({
@@ -24,6 +28,8 @@ export const AnalyzeSection: React.FC<AnalyzeSectionProps> = ({
   setInputText,
   onRunAnalysis,
   isAnalyzing,
+  analysisError,
+  onClearError,
 }) => {
   const [copiedSuccess, setCopiedSuccess] = useState(false);
 
@@ -170,15 +176,35 @@ export const AnalyzeSection: React.FC<AnalyzeSectionProps> = ({
         )}
       </div>
 
+      {/* Error Banner */}
+      {analysisError && (
+        <div className="flex items-start gap-3 p-4 rounded-xl bg-rose-950/30 border border-rose-800/60 text-sm">
+          <AlertCircle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <p className="text-rose-300 font-semibold text-xs mb-0.5">Analysis Error</p>
+            <p className="text-rose-200 text-xs leading-relaxed">{analysisError}</p>
+          </div>
+          {onClearError && (
+            <button
+              onClick={onClearError}
+              className="shrink-0 text-rose-500 hover:text-rose-300 transition-colors"
+              aria-label="Dismiss error"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+      )}
+
       {/* Analysis Launch Action & Disclaimer */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-2">
         <div className="space-y-1">
           <div className="flex items-center gap-2 text-xs text-slate-400">
             <span className="inline-block w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span>Demonstration State: Heuristic Signal Analysis Engine</span>
+            <span>Live AI Analysis: InsForge Edge Function + Gemini 2.5 Flash</span>
           </div>
           <p className="text-[11px] text-slate-500">
-            Backend edge function (`ai-proxy`) ready for production LLM streaming.
+            Offer text is sent to the <code className="text-cyan-600">analyze-offer</code> edge function and never stored.
           </p>
         </div>
 
@@ -194,7 +220,7 @@ export const AnalyzeSection: React.FC<AnalyzeSectionProps> = ({
           {isAnalyzing ? (
             <>
               <div className="w-4 h-4 border-2 border-slate-900 border-t-transparent rounded-full animate-spin" />
-              <span>EVALUATING SIGNALS...</span>
+              <span>ANALYZING WITH AI...</span>
             </>
           ) : (
             <>

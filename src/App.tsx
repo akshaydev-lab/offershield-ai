@@ -9,12 +9,14 @@ import { AboutSection } from './components/sections/AboutSection';
 import type { OfferAnalysisResult } from './types/analysis';
 import { SAMPLE_OFFERS } from './constants/sampleOffers';
 import { generatePlaceholderAnalysis } from './constants/mockAnalysis';
+import { insforge } from './lib/insforge';
 
 export const App: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<NavTab>('home');
   const [inputText, setInputText] = useState<string>('');
   const [analysisResult, setAnalysisResult] = useState<OfferAnalysisResult | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
+  const [analysisError, setAnalysisError] = useState<string | null>(null);
 
   // Load sample offer text and navigate to analyze section
   const handleLoadSample = (sampleId: string) => {
@@ -26,28 +28,55 @@ export const App: React.FC = () => {
     }
   };
 
-  // Run analysis pipeline
-  const handleRunAnalysis = () => {
-    if (!inputText.trim()) return;
+  // Run real AI analysis via InsForge Edge Function
+  const handleRunAnalysis = async () => {
+    const trimmed = inputText.trim();
+    if (!trimmed) return;
 
     setIsAnalyzing(true);
+    setAnalysisError(null);
 
-    // Realistic scanning delay simulating edge processing
-    setTimeout(() => {
-      const result = generatePlaceholderAnalysis(inputText);
-      setAnalysisResult(result);
-      setIsAnalyzing(false);
+    try {
+      const { data, error } = await insforge.functions.invoke('analyze-offer', {
+        body: { offerText: trimmed },
+      });
+
+      if (error) {
+        // InsForge SDK wraps HTTP errors; surface a clean message
+        const message =
+          (data as { error?: string } | null)?.error ||
+          (error as { message?: string })?.message ||
+          'Analysis failed. Please try again.';
+        setAnalysisError(message);
+        setIsAnalyzing(false);
+        return;
+      }
+
+      if (!data || typeof data !== 'object') {
+        setAnalysisError('Unexpected response from analysis service. Please try again.');
+        setIsAnalyzing(false);
+        return;
+      }
+
+      setAnalysisResult(data as OfferAnalysisResult);
       setCurrentTab('results');
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 750);
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : 'A network error occurred. Please check your connection.';
+      setAnalysisError(message);
+    } finally {
+      setIsAnalyzing(false);
+    }
   };
 
-  // Directly load demo placeholder state
+  // Load demo placeholder (no AI call — uses heuristic engine)
   const handleLoadDemoPlaceholder = () => {
     const defaultSample = SAMPLE_OFFERS[0];
     setInputText(defaultSample.text);
     const result = generatePlaceholderAnalysis(defaultSample.text);
     setAnalysisResult(result);
+    setAnalysisError(null);
     setCurrentTab('results');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -55,6 +84,7 @@ export const App: React.FC = () => {
   // Reset analysis
   const handleReset = () => {
     setAnalysisResult(null);
+    setAnalysisError(null);
     setCurrentTab('analyze');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -89,6 +119,8 @@ export const App: React.FC = () => {
             setInputText={setInputText}
             onRunAnalysis={handleRunAnalysis}
             isAnalyzing={isAnalyzing}
+            analysisError={analysisError}
+            onClearError={() => setAnalysisError(null)}
           />
         )}
 

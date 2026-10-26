@@ -1,8 +1,8 @@
 import { createClient } from '@insforge/sdk';
 
 // Environment variables from Vite (never leak secret keys in client bundles)
-const baseUrl = import.meta.env.VITE_INSFORGE_BASE_URL || 'https://jwnf3spp.us-east.insforge.app';
-const anonKey = import.meta.env.VITE_INSFORGE_ANON_KEY || '';
+const baseUrl = import.meta.env.VITE_INSFORGE_BASE_URL || 'https://bkpr969g.us-east.insforge.app';
+const anonKey = import.meta.env.VITE_INSFORGE_ANON_KEY || 'anon_45a8df0418820f1863596e10575cba1903fe088f943622118fbf7f30ebb466d3';
 
 /**
  * InsForge SDK Client instance configured with public anonymous token.

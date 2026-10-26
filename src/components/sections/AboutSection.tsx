@@ -11,17 +11,26 @@ export const AboutSection: React.FC = () => {
   return (
     <div className="max-w-5xl mx-auto py-8 sm:py-12 px-4 space-y-12">
       {/* Header */}
-      <div className="space-y-3 text-center sm:text-left">
-        <div className="inline-flex items-center gap-2 text-xs font-mono text-cyan-400 bg-cyan-950/60 border border-cyan-800/40 px-3 py-1 rounded-full">
-          <BookOpen className="w-3.5 h-3.5" />
-          <span>STUDENT DEFENSE MANUAL & MISSION</span>
+      <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
+        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl p-1 bg-slate-950 border border-cyan-500/40 shadow-cyber-md shrink-0">
+          <img
+            src="/images/offershield-logo.jpg"
+            alt="OfferShield AI logo"
+            className="w-full h-full object-contain rounded-xl"
+          />
         </div>
-        <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-          About OfferShield AI
-        </h2>
-        <p className="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed">
-          Engineered to protect university students, boot camp graduates, and international scholars from employment fraud, extortion fees, and predatory contractual terms.
-        </p>
+        <div className="space-y-3">
+          <div className="inline-flex items-center gap-2 text-xs font-mono text-cyan-400 bg-cyan-950/60 border border-cyan-800/40 px-3 py-1 rounded-full">
+            <BookOpen className="w-3.5 h-3.5" />
+            <span>STUDENT DEFENSE MANUAL & MISSION</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+            About OfferShield AI
+          </h2>
+          <p className="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed">
+            Engineered to protect university students, boot camp graduates, and international scholars from employment fraud, extortion fees, and predatory contractual terms.
+          </p>
+        </div>
       </div>
 
       {/* The 5 Prevalent Student Scam Archetypes */}

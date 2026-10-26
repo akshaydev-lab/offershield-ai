@@ -31,6 +31,16 @@ export const HomeSection: React.FC<HomeSectionProps> = ({ onSelectTab, onLoadSam
         <div className="absolute top-1/3 right-1/4 w-[400px] h-[250px] bg-violet-600/10 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="relative max-w-5xl mx-auto text-center space-y-6 px-4">
+          <div className="flex justify-center">
+            <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl p-1 bg-gradient-to-b from-cyan-500/20 via-slate-900/60 to-slate-950 border border-cyan-500/40 shadow-cyber-md backdrop-blur-sm">
+              <img
+                src="/images/offershield-logo.jpg"
+                alt="OfferShield AI logo"
+                className="w-full h-full object-contain rounded-xl"
+              />
+            </div>
+          </div>
+
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-shield-surface border border-cyan-500/30 text-cyan-300 text-xs sm:text-sm font-medium shadow-cyber-sm">
             <Sparkles className="w-4 h-4 text-cyan-400" />
             <span>AI Risk Pattern Analyzer for Students & Graduates</span>

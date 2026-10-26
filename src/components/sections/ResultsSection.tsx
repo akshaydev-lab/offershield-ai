@@ -14,7 +14,6 @@ import {
   RotateCcw, 
   CheckSquare,
   Square,
-  FileCode,
   Sparkles,
   Server
 } from 'lucide-react';
@@ -50,8 +49,12 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({
   if (!result) {
     return (
       <div className="max-w-4xl mx-auto py-16 px-4 text-center space-y-6">
-        <div className="w-16 h-16 rounded-2xl bg-shield-surface border border-shield-border flex items-center justify-center mx-auto text-slate-400 shadow-cyber-sm">
-          <FileCode className="w-8 h-8 text-cyan-400" />
+        <div className="w-16 h-16 rounded-2xl bg-slate-950 border border-cyan-500/30 flex items-center justify-center mx-auto overflow-hidden shadow-cyber-sm">
+          <img
+            src="/images/offershield-logo.jpg"
+            alt="OfferShield AI logo"
+            className="w-full h-full object-contain p-1"
+          />
         </div>
 
         <div className="space-y-2">
@@ -98,24 +101,44 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({
 
   return (
     <div className="max-w-6xl mx-auto py-8 sm:py-12 px-4 space-y-8">
-      {/* Structural Demo / Placeholder Alert Banner */}
-      <div className="rounded-xl border border-violet-500/40 bg-gradient-to-r from-violet-950/60 via-slate-900 to-violet-950/60 p-4 sm:p-5 shadow-cyber-violet">
+      {/* Live AI / Placeholder Mode Banner */}
+      <div
+        className={`rounded-xl border p-4 sm:p-5 ${
+          systemStatus.isMockPlaceholder
+            ? 'border-violet-500/40 bg-gradient-to-r from-violet-950/60 via-slate-900 to-violet-950/60 shadow-cyber-violet'
+            : 'border-emerald-500/40 bg-gradient-to-r from-emerald-950/40 via-slate-900 to-emerald-950/40'
+        }`}
+      >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg bg-violet-950 border border-violet-800/60 text-violet-400 shrink-0">
+            <div
+              className={`p-2 rounded-lg border shrink-0 ${
+                systemStatus.isMockPlaceholder
+                  ? 'bg-violet-950 border-violet-800/60 text-violet-400'
+                  : 'bg-emerald-950 border-emerald-800/60 text-emerald-400'
+              }`}
+            >
               <Server className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-mono font-bold tracking-wider px-2 py-0.5 rounded bg-violet-900/60 text-violet-300 border border-violet-700/60">
-                  PLACEHOLDER / DEMO SCHEMA
-                </span>
+                {systemStatus.isMockPlaceholder ? (
+                  <span className="text-xs font-mono font-bold tracking-wider px-2 py-0.5 rounded bg-violet-900/60 text-violet-300 border border-violet-700/60">
+                    DEMO SCHEMA (Heuristic)
+                  </span>
+                ) : (
+                  <span className="text-xs font-mono font-bold tracking-wider px-2 py-0.5 rounded bg-emerald-900/60 text-emerald-300 border border-emerald-700/60">
+                    ✓ LIVE AI ANALYSIS
+                  </span>
+                )}
                 <span className="text-xs text-slate-400 font-mono">
                   Engine: {systemStatus.model}
                 </span>
               </div>
               <p className="text-xs text-slate-300 mt-1">
-                Notice: AI Edge Proxy is deployed on InsForge backend. Current results demonstrate risk taxonomy, pattern detection, and non-definitive security indicators.
+                {systemStatus.isMockPlaceholder
+                  ? 'Demo mode: Results use heuristic pattern matching, not a live AI model. Click "Analyze Another" to run a real analysis.'
+                  : 'Real AI analysis completed via InsForge Edge Function. Results are AI-generated and not definitive proof of fraud or legitimacy.'}
               </p>
             </div>
           </div>
@@ -394,7 +417,8 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({
             </span>
             <ul className="text-slate-400 space-y-1 list-disc list-inside">
               <li>Responsive React + TypeScript + Tailwind 3.4 Dark Navy UI</li>
-              <li>Structural heuristic detection for advance fee & check traps</li>
+              <li>Live AI analysis via InsForge Edge Function (analyze-offer)</li>
+              <li>OpenRouter Model Gateway — google/gemini-2.5-flash</li>
               <li>Real-time input telemetry and sample loader suite</li>
               <li>Interactive student diligence checklist with live counters</li>
               <li>InsForge TypeScript SDK client setup with zero key leakage</li>
@@ -404,13 +428,13 @@ export const ResultsSection: React.FC<ResultsSectionProps> = ({
           <div className="p-3.5 rounded-xl bg-shield-surface border border-shield-border space-y-1.5">
             <span className="font-semibold text-cyan-400 flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
-              <span>Next Integration Milestones:</span>
+              <span>Future Enhancements:</span>
             </span>
             <ul className="text-slate-400 space-y-1 list-disc list-inside">
-              <li>Live stream execution via InsForge `ai-proxy` edge function</li>
               <li>Automated domain age check via WHOIS DNS resolver</li>
               <li>PDF offer letter parser and university report exporter</li>
               <li>Campus Career Center direct threat notification webhook</li>
+              <li>User auth + saved analysis history</li>
             </ul>
           </div>
         </div>

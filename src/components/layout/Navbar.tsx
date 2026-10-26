@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Sparkles, Menu, X, FileSearch, HelpCircle, Home, CheckCircle2 } from 'lucide-react';
+import { Sparkles, Menu, X, FileSearch, HelpCircle, Home, CheckCircle2 } from 'lucide-react';
 
 export type NavTab = 'home' | 'analyze' | 'results' | 'about';
 
@@ -38,9 +38,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onSelectTab, hasResu
             onClick={() => handleTabClick('home')}
             className="flex items-center gap-3 group text-left transition-all"
           >
-            <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-violet-500/20 border border-cyan-500/30 group-hover:border-cyan-400 transition-colors shadow-cyber-sm">
-              <Shield className="w-5 h-5 text-cyan-400 group-hover:scale-110 transition-transform" />
-              <div className="absolute -inset-0.5 rounded-xl bg-cyan-400/10 blur opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="relative flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-xl overflow-hidden bg-slate-950 border border-cyan-500/40 group-hover:border-cyan-400 transition-all shadow-cyber-sm">
+              <img
+                src="/images/offershield-logo.jpg"
+                alt="OfferShield AI logo"
+                className="w-full h-full object-contain p-0.5"
+              />
+              <div className="absolute -inset-0.5 rounded-xl bg-cyan-400/10 blur opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
             </div>
             <div>
               <div className="flex items-center gap-2">

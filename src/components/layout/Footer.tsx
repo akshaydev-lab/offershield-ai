@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, AlertTriangle, ExternalLink, Heart } from 'lucide-react';
+import { AlertTriangle, ExternalLink, Heart } from 'lucide-react';
 import type { NavTab } from './Navbar';
 
 interface FooterProps {
@@ -14,8 +14,12 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTab }) => {
           {/* Column 1: Brand & Mission */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-cyan-950/80 border border-cyan-800/40 text-cyan-400">
-                <Shield className="w-4 h-4" />
+              <div className="flex items-center justify-center w-8 h-8 rounded-lg overflow-hidden bg-slate-950 border border-cyan-800/50 shadow-sm">
+                <img
+                  src="/images/offershield-logo.jpg"
+                  alt="OfferShield AI logo"
+                  className="w-full h-full object-contain p-0.5"
+                />
               </div>
               <span className="text-base font-bold text-white tracking-tight">
                 OfferShield<span className="text-cyan-400 font-mono">.AI</span>
